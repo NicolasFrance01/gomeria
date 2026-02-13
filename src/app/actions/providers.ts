@@ -20,7 +20,8 @@ export async function createProvider(formData: FormData) {
     const result = ProviderSchema.safeParse(rawData)
 
     if (!result.success) {
-        return { success: false, error: result.error.errors[0].message }
+        const error = (result.error as any).errors[0]?.message || "Datos inválidos"
+        return { success: false, error }
     }
 
     try {
