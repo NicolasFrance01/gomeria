@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sistema de Gestión para Gomería
 
-## Getting Started
+Este es un sistema web completo para la gestión de una gomería, incluyendo control de stock, proveedores, punto de venta (POS) y estadísticas.
 
-First, run the development server:
+## Tecnologías
 
+- **Framework**: Next.js 16 (App Router)
+- **Base de Datos**: PostgreSQL (via Prisma ORM)
+- **Estilos**: TailwindCSS
+- **Autenticación**: NextAuth.js
+- **Iconos**: Lucide React
+
+## Requisitos Previos
+
+- Node.js 18+
+- PostgreSQL (Local o Cloud como Vercel/Neon/Supabase)
+
+## Configuración Inicial
+
+1. **Instalar dependencias**:
+   ```bash
+   npm install
+   ```
+
+2. **Configurar Base de Datos**:
+   Renombra `.env` y configura tu `DATABASE_URL` y crea un `NEXTAUTH_SECRET`:
+   ```env
+   DATABASE_URL="postgresql://usuario:password@localhost:5432/gomeria_db"
+   NEXTAUTH_SECRET="tu_secreto_super_seguro"
+   ```
+
+3. **Sincronizar Base de Datos**:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+4. **Crear usuario administrador**:
+   Puedes insertar un usuario directamente en la base de datos o usar Prisma Studio:
+   ```bash
+   npx prisma studio
+   ```
+   Crea un registro en la tabla `User` con `role: "ADMIN"`.
+   *Nota: Las contraseñas deben estar hasheadas con bcrypt. Para desarrollo, puedes modificar la lógica de login o crear un script de seed.*
+
+## Ejecución
+
+### Desarrollo
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+Accede a http://localhost:3000
+
+### Producción
+```bash
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Login**: `/login` (Credenciales).
+- **Dashboard**: `/` (Resumen de ventas y stock).
+- **Ventas (POS)**: `/sales` (Buscador rápido, carrito, métodos de pago).
+- **Productos**: `/products` (CRUD, Alerta de bajo stock, Precios).
+- **Proveedores**: `/providers` (Gestión de contacto y enlaces).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Estructura del Proyecto
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app`: Rutas y páginas (Next.js App Router).
+- `src/components`: Componentes UI reutilizables (shadcn/ui).
+- `src/lib`: Utilidades y configuración (Prisma, Auth).
+- `prisma`: Esquema de base de datos.
