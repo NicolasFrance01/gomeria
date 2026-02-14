@@ -3,85 +3,70 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, Package, ShoppingCart, Users, Home, Settings, LogOut } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { LayoutDashboard, Package, ShoppingCart, Settings, Plus, Bell, Menu } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
-
-const routes = [
-    { name: "Dashboard", href: "/", icon: Home },
-    { name: "Ventas (POS)", href: "/sales", icon: ShoppingCart },
-    { name: "Inventario", href: "/products", icon: Package },
-    { name: "Proveedores", href: "/providers", icon: Users },
-]
-
-export function Sidebar({ className }: SidebarProps) {
-    const pathname = usePathname()
-
+export function Header() {
     return (
-        <div className={cn("pb-12 h-screen bg-slate-950 text-slate-100 flex flex-col", className)}>
-            <div className="px-6 py-6 border-b border-slate-800/50">
-                <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-900/20">
-                        <span className="font-bold text-white">G</span>
-                    </div>
-                    <div>
-                        <h2 className="text-lg font-bold tracking-tight">Gomería</h2>
-                        <p className="text-xs text-slate-400">Sistema de Gestión</p>
-                    </div>
+        <header className="sticky top-0 z-40 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex justify-between items-center">
+            <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/20">
+                    G
+                </div>
+                <div>
+                    <h1 className="text-sm font-semibold tracking-wide uppercase text-slate-500 dark:text-slate-400">Gomeria Pro</h1>
+                    <p className="text-xs font-medium text-slate-900 dark:text-white">Dashboard</p>
                 </div>
             </div>
-
-            <div className="flex-1 py-6 px-4">
-                <nav className="space-y-1">
-                    {routes.map((route) => (
-                        <Button
-                            key={route.href}
-                            variant="ghost"
-                            className={cn(
-                                "w-full justify-start text-sm font-medium h-10 mb-1 transition-all duration-200",
-                                pathname === route.href
-                                    ? "bg-blue-600 text-white shadow-md shadow-blue-900/20 hover:bg-blue-700"
-                                    : "text-slate-400 hover:text-white hover:bg-slate-900"
-                            )}
-                            asChild
-                        >
-                            <Link href={route.href}>
-                                <route.icon className={cn("mr-3 h-4 w-4", pathname === route.href ? "text-white" : "text-slate-500")} />
-                                {route.name}
-                            </Link>
-                        </Button>
-                    ))}
-                </nav>
+            <div className="flex items-center gap-3">
+                <button className="relative p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+                    <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                    <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-background-dark"></span>
+                </button>
+                <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-200">
+                    {/* Placeholder Avatar */}
+                    <div className="w-full h-full flex items-center justify-center text-slate-500 font-bold">A</div>
+                </div>
             </div>
-
-            <div className="p-4 border-t border-slate-800/50">
-                <Button variant="ghost" className="w-full justify-start text-slate-400 hover:text-red-400 hover:bg-red-950/30">
-                    <LogOut className="mr-3 h-4 w-4" />
-                    Cerrar Sesión
-                </Button>
-            </div>
-        </div>
+        </header>
     )
 }
 
-export function MobileNav() {
-    const [open, setOpen] = React.useState(false)
+export function BottomNav() {
     const pathname = usePathname()
 
     return (
-        <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
-                    <Menu className="h-6 w-6" />
-                    <span className="sr-only">Toggle Menu</span>
-                </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="p-0 bg-slate-950 border-slate-800 w-72">
-                <Sidebar className="h-full border-none" />
-            </SheetContent>
-        </Sheet>
+        <nav className="fixed bottom-0 w-full bg-white/90 dark:bg-surface-dark/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 pb-safe pt-2 px-6 pb-6 z-50">
+            <div className="flex justify-between items-center">
+                <Link href="/" className="flex flex-col items-center gap-1 group w-16">
+                    <LayoutDashboard className={cn("w-6 h-6 transition-colors", pathname === "/" ? "text-primary" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300")} />
+                    <span className={cn("text-[10px] font-medium transition-colors", pathname === "/" ? "text-primary" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300")}>Home</span>
+                </Link>
+
+                <Link href="/products" className="flex flex-col items-center gap-1 group w-16">
+                    <Package className={cn("w-6 h-6 transition-colors", pathname === "/products" ? "text-primary" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300")} />
+                    <span className={cn("text-[10px] font-medium transition-colors", pathname === "/products" ? "text-primary" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300")}>Stock</span>
+                </Link>
+
+                {/* Floating FAB in the middle */}
+                <div className="-mt-8">
+                    <Link href="/sales">
+                        <button className="w-14 h-14 rounded-full bg-primary shadow-lg shadow-primary/40 flex items-center justify-center text-white hover:scale-105 transition-transform active:scale-95 border-4 border-background-light dark:border-background-dark">
+                            <Plus className="w-8 h-8" />
+                        </button>
+                    </Link>
+                </div>
+
+                <Link href="/sales" className="flex flex-col items-center gap-1 group w-16">
+                    <ShoppingCart className={cn("w-6 h-6 transition-colors", pathname === "/sales" ? "text-primary" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300")} />
+                    <span className={cn("text-[10px] font-medium transition-colors", pathname === "/sales" ? "text-primary" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300")}>Sales</span>
+                </Link>
+
+                <Link href="/settings" className="flex flex-col items-center gap-1 group w-16">
+                    <Settings className={cn("w-6 h-6 transition-colors", pathname === "/settings" ? "text-primary" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300")} />
+                    <span className={cn("text-[10px] font-medium transition-colors", pathname === "/settings" ? "text-primary" : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300")}>Settings</span>
+                </Link>
+            </div>
+        </nav>
     )
 }
