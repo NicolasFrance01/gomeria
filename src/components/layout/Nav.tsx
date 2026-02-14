@@ -12,11 +12,10 @@ import { cn } from "@/lib/utils"
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 const routes = [
-    { name: "Inicio", href: "/", icon: Home },
+    { name: "Dashboard", href: "/", icon: Home },
     { name: "Ventas", href: "/sales", icon: ShoppingCart },
     { name: "Stock", href: "/products", icon: Package },
     { name: "Proveedores", href: "/providers", icon: Users },
-    { name: "Reportes", href: "/dashboard", icon: TrendingUp },
 ]
 
 export function Sidebar({ className }: SidebarProps) {
