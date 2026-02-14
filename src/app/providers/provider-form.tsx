@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Plus } from "lucide-react"
+import { toast } from "sonner"
 
 function SubmitButton() {
     const { pending } = useFormStatus()
@@ -20,15 +21,14 @@ function SubmitButton() {
 
 export function ProviderForm() {
     const [open, setOpen] = useState(false)
-    const [error, setError] = useState("")
 
     async function clientAction(formData: FormData) {
         const res = await createProvider(formData)
         if (res.error) {
-            setError(res.error)
+            toast.error(res.error)
         } else {
             setOpen(false)
-            setError("")
+            toast.success("Proveedor agregado correctamente")
         }
     }
 
@@ -57,7 +57,6 @@ export function ProviderForm() {
                         <Label htmlFor="url">Web / Link</Label>
                         <Input id="url" name="url" placeholder="https://..." />
                     </div>
-                    {error && <p className="text-sm text-red-500">{error}</p>}
                     <div className="flex justify-end">
                         <SubmitButton />
                     </div>

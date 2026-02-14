@@ -4,6 +4,7 @@ import { useState } from "react"
 import { deleteProvider } from "@/app/actions/providers"
 import { Button } from "@/components/ui/button"
 import { Trash2 } from "lucide-react"
+import { toast } from "sonner"
 
 export function DeleteProviderButton({ id, name }: { id: string, name: string }) {
     const [loading, setLoading] = useState(false)
@@ -13,6 +14,7 @@ export function DeleteProviderButton({ id, name }: { id: string, name: string })
             setLoading(true)
             await deleteProvider(id)
             setLoading(false)
+            toast.success("Proveedor eliminado")
         }
     }
 
