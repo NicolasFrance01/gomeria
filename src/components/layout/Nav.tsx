@@ -3,8 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, Package, ShoppingCart, Users, Home, TrendingUp, Settings, LogOut } from "lucide-react"
-
+import { Menu, Package, ShoppingCart, Users, Home, Settings, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
@@ -22,42 +21,44 @@ export function Sidebar({ className }: SidebarProps) {
     const pathname = usePathname()
 
     return (
-        <div className={cn("pb-12 h-screen bg-slate-900 text-white", className)}>
-            <div className="space-y-4 py-4">
-                <div className="px-4 py-6 border-b border-slate-800">
-                    <h2 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-                        <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                            <span className="text-lg font-black">G</span>
-                        </div>
-                        Gomería
-                    </h2>
-                    <p className="text-xs text-slate-400 mt-1">Sistema de Gestión</p>
-                </div>
-                <div className="px-3 py-2">
-                    <div className="space-y-1">
-                        {routes.map((route) => (
-                            <Button
-                                key={route.href}
-                                variant={pathname === route.href ? "secondary" : "ghost"}
-                                className={cn(
-                                    "w-full justify-start text-base font-medium transition-all hover:translate-x-1",
-                                    pathname === route.href
-                                        ? "bg-blue-600 text-white hover:bg-blue-700"
-                                        : "text-slate-400 hover:text-white hover:bg-slate-800"
-                                )}
-                                asChild
-                            >
-                                <Link href={route.href}>
-                                    <route.icon className="mr-3 h-5 w-5" />
-                                    {route.name}
-                                </Link>
-                            </Button>
-                        ))}
+        <div className={cn("pb-12 h-screen bg-slate-950 text-slate-100 flex flex-col", className)}>
+            <div className="px-6 py-6 border-b border-slate-800/50">
+                <div className="flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-900/20">
+                        <span className="font-bold text-white">G</span>
+                    </div>
+                    <div>
+                        <h2 className="text-lg font-bold tracking-tight">Gomería</h2>
+                        <p className="text-xs text-slate-400">Sistema de Gestión</p>
                     </div>
                 </div>
             </div>
-            <div className="absolute bottom-4 left-4 right-4">
-                <Button variant="outline" className="w-full justify-start border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white bg-transparent">
+
+            <div className="flex-1 py-6 px-4">
+                <nav className="space-y-1">
+                    {routes.map((route) => (
+                        <Button
+                            key={route.href}
+                            variant="ghost"
+                            className={cn(
+                                "w-full justify-start text-sm font-medium h-10 mb-1 transition-all duration-200",
+                                pathname === route.href
+                                    ? "bg-blue-600 text-white shadow-md shadow-blue-900/20 hover:bg-blue-700"
+                                    : "text-slate-400 hover:text-white hover:bg-slate-900"
+                            )}
+                            asChild
+                        >
+                            <Link href={route.href}>
+                                <route.icon className={cn("mr-3 h-4 w-4", pathname === route.href ? "text-white" : "text-slate-500")} />
+                                {route.name}
+                            </Link>
+                        </Button>
+                    ))}
+                </nav>
+            </div>
+
+            <div className="p-4 border-t border-slate-800/50">
+                <Button variant="ghost" className="w-full justify-start text-slate-400 hover:text-red-400 hover:bg-red-950/30">
                     <LogOut className="mr-3 h-4 w-4" />
                     Cerrar Sesión
                 </Button>
@@ -78,38 +79,8 @@ export function MobileNav() {
                     <span className="sr-only">Toggle Menu</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="p-0 bg-slate-900 border-r-slate-800 w-72">
-                <div className="px-4 py-6 border-b border-slate-800">
-                    <h2 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-                        <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                            <span className="text-lg font-black">G</span>
-                        </div>
-                        Gomería
-                    </h2>
-                </div>
-                <div className="px-3 py-4">
-                    <div className="space-y-1">
-                        {routes.map((route) => (
-                            <Button
-                                key={route.href}
-                                variant={pathname === route.href ? "secondary" : "ghost"}
-                                className={cn(
-                                    "w-full justify-start text-base font-medium",
-                                    pathname === route.href
-                                        ? "bg-blue-600 text-white hover:bg-blue-700"
-                                        : "text-slate-400 hover:text-white hover:bg-slate-800"
-                                )}
-                                asChild
-                                onClick={() => setOpen(false)}
-                            >
-                                <Link href={route.href}>
-                                    <route.icon className="mr-3 h-5 w-5" />
-                                    {route.name}
-                                </Link>
-                            </Button>
-                        ))}
-                    </div>
-                </div>
+            <SheetContent side="left" className="p-0 bg-slate-950 border-slate-800 w-72">
+                <Sidebar className="h-full border-none" />
             </SheetContent>
         </Sheet>
     )
