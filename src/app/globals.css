@@ -9,7 +9,10 @@
   }
 
   body {
-    @apply bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 min-h-screen antialiased;
+    @apply min-h-screen antialiased;
+    background-color: theme('colors.background-light');
+    color: #1e293b;
+    /* slate-800 */
 
     /* Hide scrollbar for chrome/safari/opera */
     &::-webkit-scrollbar {
@@ -21,6 +24,12 @@
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+  }
+
+  .dark body {
+    background-color: theme('colors.background-dark');
+    color: #f1f5f9;
+    /* slate-100 */
   }
 }
 
