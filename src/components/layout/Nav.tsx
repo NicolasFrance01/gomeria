@@ -7,104 +7,76 @@ import {
     LayoutDashboard,
     Package,
     ShoppingCart,
-    Settings,
     Users,
-    BarChart3,
+    Settings,
     LogOut,
-    ChevronLeft,
-    ChevronRight
+    Car,
+    Wrench,
+    FileText,
+    Bell
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const sidebarItems = [
-    { name: "Dashboard", href: "/", icon: LayoutDashboard },
-    { name: "Ventas / POS", href: "/sales", icon: ShoppingCart },
-    { name: "Inventario", href: "/products", icon: Package },
-    { name: "Proveedores", href: "/providers", icon: Users },
-    { name: "Reportes", href: "/reports", icon: BarChart3 },
-    { name: "Configuración", href: "/settings", icon: Settings },
+    { name: "INICIO", href: "/", icon: LayoutDashboard },
+    { name: "PRODUCTOS", href: "/products", icon: Package },
+    { name: "VENTAS", href: "/sales", icon: ShoppingCart },
+    { name: "PROVEEDORES", href: "/providers", icon: Users },
+    { name: "SERVICIO", href: "/service", icon: Wrench },
+    { name: "REPORTES", href: "/reports", icon: FileText },
+    { name: "AJUSTES", href: "/settings", icon: Settings },
 ]
 
 export function DesktopSidebar() {
     const pathname = usePathname()
-    const [collapsed, setCollapsed] = React.useState(false)
 
     return (
-        <aside className={cn(
-            "fixed left-0 top-0 z-40 h-screen bg-slate-900 text-slate-100 transition-all duration-300 flex flex-col border-r border-slate-800",
-            collapsed ? "w-16" : "w-64"
-        )}>
-            {/* Logo Area */}
-            <div className={cn(
-                "h-16 flex items-center px-4 border-b border-slate-800",
-                collapsed ? "justify-center" : "justify-between"
-            )}>
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20">
-                        G
-                    </div>
-                    {!collapsed && (
-                        <div>
-                            <h1 className="text-sm font-bold tracking-wide uppercase text-white leading-tight">Gomeria Pro</h1>
-                            <p className="text-[10px] text-slate-400">v1.2.0</p>
-                        </div>
-                    )}
+        <aside className="fixed left-0 top-0 z-40 h-screen w-64 flex flex-col shadow-xl">
+            {/* Top Black Area - Logo */}
+            <div className="h-48 bg-black flex flex-col items-center justify-center text-white relative">
+                <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-2 border-2 border-white/20">
+                    <Car className="w-8 h-8 text-white" />
                 </div>
-                {!collapsed && (
-                    <button onClick={() => setCollapsed(true)} className="p-1 rounded-md hover:bg-slate-800 text-slate-400 hover:text-white">
-                        <ChevronLeft className="w-4 h-4" />
-                    </button>
-                )}
+                <h1 className="text-xl font-bold tracking-widest">GOMERIA</h1>
+                <p className="text-[10px] text-gray-400 tracking-widest mt-1">SISTEMA INTEGRAL</p>
+
+                {/* User Status Mock */}
+                <div className="absolute top-4 right-4 text-xs text-green-500 font-mono">● ONLINE</div>
             </div>
 
-            {/* Navigation */}
-            <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto custom-scrollbar">
-                {collapsed && (
-                    <button onClick={() => setCollapsed(false)} className="w-full flex justify-center mb-4 p-2 rounded-md hover:bg-slate-800 text-slate-400 hover:text-white">
-                        <ChevronRight className="w-4 h-4" />
-                    </button>
-                )}
+            {/* Red Menu Area */}
+            <nav className="flex-1 bg-[#FF0000] py-4 text-white overflow-y-auto">
+                <div className="px-4 mb-6">
+                    <p className="text-xs font-bold text-white/50 border-b border-white/20 pb-1 mb-2">MENU PRINCIPAL</p>
+                    <ul className="space-y-1">
+                        {sidebarItems.map((item) => {
+                            const isActive = pathname === item.href
+                            return (
+                                <li key={item.href}>
+                                    <Link
+                                        href={item.href}
+                                        className={cn(
+                                            "flex items-center gap-3 px-4 py-3 text-sm font-bold tracking-wide transition-colors hover:bg-black/10 rounded-lg",
+                                            isActive ? "bg-black/20 text-white border-l-4 border-white" : "text-white/90"
+                                        )}
+                                    >
+                                        <item.icon className="w-5 h-5" />
+                                        <span>{item.name}</span>
+                                    </Link>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
 
-                {sidebarItems.map((item) => {
-                    const isActive = pathname === item.href
-                    return (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className={cn(
-                                "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all group",
-                                isActive
-                                    ? "bg-primary text-white shadow-md shadow-primary/20"
-                                    : "text-slate-400 hover:text-white hover:bg-slate-800"
-                            )}
-                            title={collapsed ? item.name : undefined}
-                        >
-                            <item.icon className={cn("w-5 h-5 flex-shrink-0", isActive ? "text-white" : "text-slate-400 group-hover:text-white")} />
-                            {!collapsed && <span>{item.name}</span>}
-                        </Link>
-                    )
-                })}
+                <div className="px-4">
+                    <p className="text-xs font-bold text-white/50 border-b border-white/20 pb-1 mb-2">SISTEMA</p>
+                    <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold tracking-wide text-white/90 hover:bg-black/10 rounded-lg transition-colors text-left">
+                        <LogOut className="w-5 h-5" />
+                        <span>CERRAR SESIÓN</span>
+                    </button>
+                </div>
             </nav>
-
-            {/* User Profile Footer */}
-            <div className="p-4 border-t border-slate-800">
-                <div className={cn("flex items-center gap-3", collapsed ? "justify-center" : "")}>
-                    <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300">
-                        A
-                    </div>
-                    {!collapsed && (
-                        <div className="flex-1 min-w-0">
-                            <p className="text-xs font-medium text-white truncate">Administrador</p>
-                            <p className="text-[10px] text-slate-500 truncate">admin@gomeria.com</p>
-                        </div>
-                    )}
-                    {!collapsed && (
-                        <button className="text-slate-400 hover:text-red-400 transition-colors">
-                            <LogOut className="w-4 h-4" />
-                        </button>
-                    )}
-                </div>
-            </div>
         </aside>
     )
 }
