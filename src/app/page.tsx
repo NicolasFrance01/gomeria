@@ -61,83 +61,86 @@ export default async function Dashboard() {
   return (
     <>
       {/* Welcome & Quick Actions */}
-      <section>
-        <div className="flex justify-between items-end mb-4">
+      <section className="mb-8">
+        <div className="flex justify-between items-end mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Buenos días, Admin</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">Aquí está lo que está pasando hoy.</p>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Buenos días, Admin</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Resumen de actividad diaria.</p>
           </div>
         </div>
-        {/* Quick Action Grid */}
-        <div className="grid grid-cols-4 gap-4 mb-2">
+
+        {/* Quick Action Grid - Improved Harmony */}
+        <div className="grid grid-cols-4 gap-3 sm:gap-4">
           <Link href="/sales" className="flex flex-col items-center gap-2 group">
-            <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30 group-active:scale-95 transition-transform">
-              <ShoppingCart className="w-6 h-6" />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white shadow-lg shadow-primary/25 group-active:scale-95 transition-all duration-200 ring-2 ring-transparent group-hover:ring-primary/20">
+              <ShoppingCart className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2.5} />
             </div>
-            <span className="text-xs font-medium text-slate-600 dark:text-slate-300">Nueva Venta</span>
+            <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 tracking-tight group-hover:text-primary transition-colors">Nueva Venta</span>
           </Link>
-          <Link href="/products" className="flex flex-col items-center gap-2 group">
-            <div className="w-14 h-14 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 flex items-center justify-center text-primary shadow-sm group-active:scale-95 transition-transform">
-              <Archive className="w-6 h-6" />
+          <Link href="/stock" className="flex flex-col items-center gap-2 group">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 flex items-center justify-center text-primary shadow-sm group-active:scale-95 transition-all duration-200">
+              <Archive className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2} />
             </div>
-            <span className="text-xs font-medium text-slate-600 dark:text-slate-300">Stock</span>
+            <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 tracking-tight group-hover:text-primary transition-colors">Stock</span>
           </Link>
           <button className="flex flex-col items-center gap-2 group">
-            <div className="w-14 h-14 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 flex items-center justify-center text-primary shadow-sm group-active:scale-95 transition-transform">
-              <ScanLine className="w-6 h-6" />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 flex items-center justify-center text-primary shadow-sm group-active:scale-95 transition-all duration-200">
+              <ScanLine className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2} />
             </div>
-            <span className="text-xs font-medium text-slate-600 dark:text-slate-300">Escanear</span>
+            <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 tracking-tight group-hover:text-primary transition-colors">Escanear</span>
           </button>
           <button className="flex flex-col items-center gap-2 group">
-            <div className="w-14 h-14 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 flex items-center justify-center text-primary shadow-sm group-active:scale-95 transition-transform">
-              <Wrench className="w-6 h-6" />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 flex items-center justify-center text-primary shadow-sm group-active:scale-95 transition-all duration-200">
+              <Wrench className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2} />
             </div>
-            <span className="text-xs font-medium text-slate-600 dark:text-slate-300">Servicio</span>
+            <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 tracking-tight group-hover:text-primary transition-colors">Servicio</span>
           </button>
         </div>
       </section>
 
       {/* KPI Carousel */}
-      <section className="relative">
-        <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 snap-x snap-mandatory">
-          {/* Card 1: Today's Sales */}
-          <div className="min-w-[85%] snap-center bg-white dark:bg-surface-dark p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
-            <div className="absolute right-0 top-0 p-4 opacity-10">
-              <DollarSign className="w-16 h-16 text-primary" />
+      <section className="relative mb-8">
+        <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4 snap-x snap-mandatory -mx-4 px-4">
+          {/* Card 1: Today's Sales - Premium Gradient */}
+          <div className="min-w-[85%] sm:min-w-[300px] snap-center bg-gradient-to-br from-surface-dark to-surface-dark-lighter dark:from-surface-dark dark:to-surface-dark-lighter p-6 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden group">
+            <div className="absolute right-0 top-0 p-6 opacity-5 dark:opacity-10 transform translate-x-2 -translate-y-2 group-hover:scale-110 transition-transform duration-500">
+              <DollarSign className="w-24 h-24 text-primary" />
             </div>
-            <p className="text-xs font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase mb-1">Ventas Hoy</p>
-            <div className="flex items-baseline gap-2 mb-2">
-              <h3 className="text-3xl font-bold text-slate-900 dark:text-white">${stats.totalToday.toLocaleString()}</h3>
-              <span className="text-xs font-medium text-green-500 flex items-center bg-green-500/10 px-1.5 py-0.5 rounded">
-                <ArrowUpRight className="w-3 h-3 mr-0.5" /> Hoy
+            <div className="relative z-10 text-white">
+              <p className="text-xs font-bold tracking-widest text-slate-400 uppercase mb-2">Ventas Hoy</p>
+              <div className="flex items-baseline gap-2 mb-2">
+                <h3 className="text-4xl font-bold tracking-tight">${stats.totalToday.toLocaleString()}</h3>
+              </div>
+              <span className="text-xs font-bold text-emerald-400 flex items-center bg-emerald-500/10 w-fit px-2 py-1 rounded-full border border-emerald-500/20">
+                <ArrowUpRight className="w-3 h-3 mr-1" strokeWidth={3} /> Hoy
               </span>
             </div>
           </div>
 
-          {/* Card 2: Monthly Revenue */}
-          <div className="min-w-[85%] snap-center bg-white dark:bg-surface-dark p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
-            <div className="absolute right-0 top-0 p-4 opacity-10">
-              <CreditCard className="w-16 h-16 text-primary" />
+          {/* Card 2: Monthly Revenue - Clean White/Dark */}
+          <div className="min-w-[85%] sm:min-w-[300px] snap-center bg-white dark:bg-surface-dark p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-lg relative overflow-hidden">
+            <div className="absolute right-0 top-0 p-6 opacity-10">
+              <CreditCard className="w-24 h-24 text-indigo-500" />
             </div>
-            <p className="text-xs font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase mb-1">Ingresos Mensuales</p>
-            <div className="flex items-baseline gap-2 mb-2">
-              <h3 className="text-3xl font-bold text-slate-900 dark:text-white">${stats.totalMonth.toLocaleString()}</h3>
+            <p className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase mb-2">Ingresos Mes</p>
+            <div className="flex items-baseline gap-2 mb-4">
+              <h3 className="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">${stats.totalMonth.toLocaleString()}</h3>
             </div>
-            <div className="w-full bg-slate-100 dark:bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+            <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
               <div className="bg-indigo-500 h-full rounded-full" style={{ width: '45%' }}></div>
             </div>
           </div>
 
-          {/* Card 3: Est. Profit */}
-          <div className="min-w-[85%] snap-center bg-white dark:bg-surface-dark p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
-            <div className="absolute right-0 top-0 p-4 opacity-10">
-              <Activity className="w-16 h-16 text-primary" />
+          {/* Card 3: Profit - Clean White/Dark */}
+          <div className="min-w-[85%] sm:min-w-[300px] snap-center bg-white dark:bg-surface-dark p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-lg relative overflow-hidden">
+            <div className="absolute right-0 top-0 p-6 opacity-10">
+              <Activity className="w-24 h-24 text-emerald-500" />
             </div>
-            <p className="text-xs font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase mb-1">Ganancia Est. (Hoy)</p>
-            <div className="flex items-baseline gap-2 mb-2">
-              <h3 className="text-3xl font-bold text-slate-900 dark:text-white">${stats.profitToday.toLocaleString()}</h3>
+            <p className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase mb-2">Ganancia (Hoy)</p>
+            <div className="flex items-baseline gap-2 mb-4">
+              <h3 className="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">${stats.profitToday.toLocaleString()}</h3>
             </div>
-            <div className="w-full bg-slate-100 dark:bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+            <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
               <div className="bg-emerald-500 h-full rounded-full" style={{ width: '60%' }}></div>
             </div>
           </div>
