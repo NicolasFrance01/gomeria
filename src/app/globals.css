@@ -9,7 +9,9 @@
   }
 
   body {
-    @apply min-h-screen antialiased text-slate-900;
+    @apply min-h-screen antialiased;
+    color: #000000;
+    /* theme-black */
     background-color: #F5F5F5;
     /* theme-gray */
 
