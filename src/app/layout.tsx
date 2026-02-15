@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header, BottomNav } from "@/components/layout/Nav";
-// Force layout update
+import { DesktopSidebar } from "@/components/layout/Nav";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Gomería System",
-  description: "Sistema de gestión para gomería",
+  title: "Gomería Pro - Sistema de Gestión",
+  description: "Sistema profesional para gestión de gomerías",
 };
 
 export default function RootLayout({
@@ -19,13 +18,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="dark">
-      <body className={`${inter.className} bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen pb-24 antialiased`}>
-        <Header />
-        <main className="px-4 py-6 space-y-8 max-w-7xl mx-auto">
-          {children}
-        </main>
-        <BottomNav />
-        <Toaster />
+      <body className={`${inter.className} bg-slate-50 dark:bg-[#0f111a] text-slate-900 dark:text-slate-100 font-display min-h-screen antialiased`}>
+        <div className="flex min-h-screen">
+          <DesktopSidebar />
+          <main className="flex-1 ml-64 p-8 transition-all duration-300">
+            <div className="max-w-[1600px] mx-auto">
+              {children}
+            </div>
+          </main>
+        </div>
+        <Toaster position="top-right" theme="dark" />
       </body>
     </html>
   );
