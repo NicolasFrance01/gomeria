@@ -44,68 +44,60 @@ export default async function Dashboard() {
 
   return (
     <div className="space-y-10">
-      {/* Top Section: Welcome + KPIs in one single row */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Card 1: Welcome & Date */}
-        <div className="bg-gradient-to-br from-saas-red to-saas-red-hover rounded-2xl p-6 text-white shadow-card relative overflow-hidden flex flex-col justify-between group">
-          <div className="absolute top-0 right-0 p-4 opacity-10">
-            <TrendingUp className="w-24 h-24 rotate-12" />
+      {/* Top Welcome Header - Single Line */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 pb-5">
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-gray-800 tracking-tight">Hola, Nicolas.</h1>
+          <span className="text-gray-400 text-xl font-light">|</span>
+          <p className="text-gray-500 text-sm">Aquí tienes el resumen de hoy.</p>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-gray-500 font-medium bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+          <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          {new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}
+        </div>
+      </div>
+
+      {/* KPI Row - Vertical Centered Cards (Button Style) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Sales KPI */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-3 group">
+          <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform shadow-sm">
+            <DollarSign className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Hola, Nicolas.</h1>
-            <p className="text-white/80 mt-1 text-sm">Aquí tienes el resumen.</p>
-          </div>
-          <div className="text-sm font-medium bg-white/10 backdrop-blur-sm self-start px-3 py-1 rounded-full mt-4">
-            {new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}
-          </div>
-        </div>
-
-        {/* Card 2: Sales KPI */}
-        <div className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-sm font-medium text-gray-500">Ventas Hoy</p>
-              <h3 className="text-3xl font-bold text-gray-900 mt-2">${(stats.salesToday._sum.total || 0).toLocaleString()}</h3>
-            </div>
-            <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform">
-              <DollarSign className="w-5 h-5" />
-            </div>
-          </div>
-          <div className="flex items-center text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md w-fit mt-3">
-            <TrendingUp className="w-3 h-3 mr-1" />
-            +{(stats.salesToday._count || 0)} ops
+            <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Ventas Hoy</p>
+            <h3 className="text-3xl font-black text-gray-900 leading-none mb-1">${(stats.salesToday._sum.total || 0).toLocaleString()}</h3>
+            <p className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md inline-block">
+              +{(stats.salesToday._count || 0)} ops
+            </p>
           </div>
         </div>
 
-        {/* Card 3: stock KPI */}
-        <div className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-sm font-medium text-gray-500">Stock Bajo</p>
-              <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.lowStockCount}</h3>
-            </div>
-            <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 group-hover:scale-110 transition-transform">
-              <AlertTriangle className="w-5 h-5" />
-            </div>
+        {/* Low Stock KPI */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-3 group">
+          <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 group-hover:scale-110 transition-transform shadow-sm">
+            <AlertTriangle className="w-6 h-6" />
           </div>
-          <div className="flex items-center text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-1 rounded-md w-fit mt-3">
-            Requiere atención
+          <div>
+            <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Stock Bajo</p>
+            <h3 className="text-3xl font-black text-gray-900 leading-none mb-1">{stats.lowStockCount}</h3>
+            <p className="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md inline-block">
+              Requiere atención
+            </p>
           </div>
         </div>
 
-        {/* Card 4: Products KPI */}
-        <div className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-sm font-medium text-gray-500">Productos</p>
-              <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.productCount}</h3>
-            </div>
-            <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
-              <Package className="w-5 h-5" />
-            </div>
+        {/* Total Products KPI */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-3 group">
+          <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform shadow-sm">
+            <Package className="w-6 h-6" />
           </div>
-          <div className="text-xs font-medium text-gray-400 bg-gray-50 px-2 py-1 rounded-md w-fit mt-3">
-            En inventario
+          <div>
+            <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Productos</p>
+            <h3 className="text-3xl font-black text-gray-900 leading-none mb-1">{stats.productCount}</h3>
+            <p className="text-xs font-bold text-gray-400 bg-gray-50 px-2 py-0.5 rounded-md inline-block">
+              En inventario
+            </p>
           </div>
         </div>
       </div>

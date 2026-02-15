@@ -27,12 +27,12 @@ export default function RootLayout({
               <h2 className="text-gray-800 font-semibold text-lg tracking-tight">Panel de Control</h2>
             </div>
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-                <div className="text-right">
-                  <p className="text-sm font-bold text-gray-900 leading-none">Administrador</p>
-                  <p className="text-[11px] text-gray-500 mt-1">Nicolas France</p>
+              <div className="flex items-center gap-3">
+                <div className="flex flex-col items-end">
+                  <span className="text-sm font-bold text-gray-800 leading-none">Nicolas France</span>
+                  <span className="text-[10px] text-gray-500 font-medium uppercase mt-0.5 tracking-wide">Administrador</span>
                 </div>
-                <div className="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 font-bold border border-gray-200">
+                <div className="w-8 h-8 bg-saas-red text-white rounded-lg flex items-center justify-center font-bold text-xs shadow-sm">
                   NF
                 </div>
               </div>
