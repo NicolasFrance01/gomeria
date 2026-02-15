@@ -43,31 +43,31 @@ export default async function Dashboard() {
   ]
 
   return (
+  return (
     <div className="space-y-10">
       {/* Top Section: Welcome and KPIs in ONE single row of 4 columns */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-4 gap-6">
         {/* ABSOLUTELY FIRST COLUMN: Welcome & Date */}
-        <div className="bg-gradient-to-br from-saas-red to-saas-red-hover rounded-2xl p-6 text-white shadow-card hover:shadow-lg transition-all duration-200 hover:-translate-y-1 relative overflow-hidden flex flex-col justify-between group h-full min-h-[140px]">
-          <div className="absolute top-0 right-0 p-4 opacity-10">
-            <TrendingUp className="w-20 h-20 rotate-12" />
+        <div className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-2 group h-full">
+          <div className="w-10 h-10 rounded-xl bg-saas-red/10 flex items-center justify-center text-saas-red group-hover:scale-110 transition-transform shadow-sm">
+            <TrendingUp className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight">Hola, Nicolas.</h1>
-            <p className="text-white/80 mt-1 text-xs">Resumen del día.</p>
-          </div>
-          <div className="text-xs font-bold bg-white/20 backdrop-blur-md self-start px-3 py-1.5 rounded-lg mt-3 shadow-inner">
-            {new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}
+            <h1 className="text-sm font-bold text-gray-900 leading-tight">Hola, Nicolas</h1>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">
+              {new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric' })}
+            </p>
           </div>
         </div>
 
         {/* Column 2: Sales KPI */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-2 group h-full">
+        <div className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-2 group h-full">
           <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform shadow-sm">
             <DollarSign className="w-5 h-5" />
           </div>
           <div>
             <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-0.5">Ventas Hoy</p>
-            <h3 className="text-2xl font-black text-gray-900 leading-none mb-1">${(stats.salesToday._sum.total || 0).toLocaleString()}</h3>
+            <h3 className="text-xl font-black text-gray-900 leading-none mb-1">${(stats.salesToday._sum.total || 0).toLocaleString()}</h3>
             <p className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md inline-block">
               +{(stats.salesToday._count || 0)} ops
             </p>
@@ -75,13 +75,13 @@ export default async function Dashboard() {
         </div>
 
         {/* Column 3: Low Stock KPI */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-2 group h-full">
+        <div className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-2 group h-full">
           <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 group-hover:scale-110 transition-transform shadow-sm">
             <AlertTriangle className="w-5 h-5" />
           </div>
           <div>
             <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-0.5">Stock Bajo</p>
-            <h3 className="text-2xl font-black text-gray-900 leading-none mb-1">{stats.lowStockCount}</h3>
+            <h3 className="text-xl font-black text-gray-900 leading-none mb-1">{stats.lowStockCount}</h3>
             <p className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md inline-block">
               Requiere atención
             </p>
@@ -89,13 +89,13 @@ export default async function Dashboard() {
         </div>
 
         {/* Column 4: Total Products KPI */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-2 group h-full">
+        <div className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center justify-center gap-2 group h-full">
           <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform shadow-sm">
             <Package className="w-5 h-5" />
           </div>
           <div>
             <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-0.5">Productos</p>
-            <h3 className="text-2xl font-black text-gray-900 leading-none mb-1">{stats.productCount}</h3>
+            <h3 className="text-xl font-black text-gray-900 leading-none mb-1">{stats.productCount}</h3>
             <p className="text-[10px] font-bold text-gray-400 bg-gray-50 px-2 py-0.5 rounded-md inline-block">
               En inventario
             </p>
@@ -103,13 +103,13 @@ export default async function Dashboard() {
         </div>
       </div>
 
-      {/* Modules Grid - "Button-like" Cards */}
+      {/* Modules Grid - "Button-like" Cards - Strict 6 Columns */}
       <div>
         <h3 className="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2">
           <div className="w-1 h-6 bg-saas-red rounded-full"></div>
           Accesos Directos
         </h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-6 gap-4">
           {modules.map((mod) => (
             <Link key={mod.title} href={mod.href} className="group bg-white p-4 rounded-xl shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1 flex flex-col items-center text-center h-full justify-center gap-3">
               <div className={`w-12 h-12 rounded-xl ${mod.bg} flex items-center justify-center ${mod.color} group-hover:scale-110 transition-transform duration-300 shadow-sm`}>

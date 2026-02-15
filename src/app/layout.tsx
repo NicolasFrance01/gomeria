@@ -41,7 +41,7 @@ export default function RootLayout({
 
           {/* Scrollable Content Area */}
           <div className="flex-1 overflow-y-auto p-8">
-            <div className="max-w-7xl mx-auto space-y-8">
+            <div className="max-w-[1600px] mx-auto space-y-8">
               {children}
             </div>
           </div>

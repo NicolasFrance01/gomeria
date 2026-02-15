@@ -12,24 +12,59 @@
     @apply min-h-screen antialiased bg-saas-bg;
     color: #1f2937;
     font-size: 0.875rem;
+    min-width: 1280px;
+    /* Force desktop width */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+  }
 
-    /* Hide scrollbar for chrome/safari/opera */
-    &::-webkit-scrollbar {
-      display: none;
+  /* Mobile Blocker - Only visible on screens < 1024px */
+  @media (max-width: 1024px) {
+    body::after {
+      content: "Este sistema está optimizado para uso en computadora. Por favor, expande tu ventana o usa un dispositivo de escritorio.";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #1f2937;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      z-index: 9999;
+      font-size: 1.25rem;
+      font-weight: 600;
     }
 
-    /* Hide scrollbar for IE, Edge and Firefox */
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
+    /* Hide everything else under the blocker */
+    #root,
+    main,
+    aside,
+    header {
+      display: none !important;
+    }
   }
 
-  a {
-    @apply hover:opacity-80 transition-opacity;
-    text-decoration: none;
-    color: inherit;
+  /* Hide scrollbar for chrome/safari/opera */
+  &::-webkit-scrollbar {
+    display: none;
   }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+a {
+  @apply hover:opacity-80 transition-opacity;
+  text-decoration: none;
+  color: inherit;
+}
 }
 
 @layer utilities {
