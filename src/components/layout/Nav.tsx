@@ -31,7 +31,7 @@ export function DesktopSidebar() {
     const pathname = usePathname()
 
     return (
-        <aside className="fixed left-0 top-0 z-40 h-screen w-64 flex flex-col shadow-xl">
+        <aside className="w-64 flex-shrink-0 flex flex-col h-full shadow-xl z-20 relative">
             {/* Top Black Area - Logo */}
             <div className="h-48 bg-black flex flex-col items-center justify-center text-white relative">
                 <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-2 border-2 border-white/20">

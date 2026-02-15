@@ -18,21 +18,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.className} bg-[#F5F5F5] min-h-screen antialiased`}>
+      <body className={`${inter.className} bg-[#F0F2F5] h-screen overflow-hidden flex antialiased`}>
         <DesktopSidebar />
-        <main className="ml-64 min-h-screen bg-white shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.1)] relative z-0">
+        <main className="flex-1 flex flex-col h-screen overflow-hidden bg-[#F5F5F5] relative z-0">
           {/* Header Bar */}
-          <header className="h-16 bg-white border-b border-gray-100 flex justify-between items-center px-8 sticky top-0 z-30">
-            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Panel de Control</div>
+          <header className="h-14 flex-shrink-0 bg-white border-b border-gray-200 flex justify-between items-center px-6 shadow-sm z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-gray-400 font-bold uppercase text-xs tracking-wider">Sistema de Gestión</span>
+              <span className="text-gray-300">/</span>
+              <span className="text-gray-700 font-bold uppercase text-xs tracking-wider">Panel Principal</span>
+            </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <p className="text-sm font-bold text-gray-900">Admin</p>
-                <p className="text-xs text-gray-400">Administrador</p>
+                <p className="text-sm font-bold text-gray-900 leading-none">Admin</p>
+                <p className="text-[10px] text-gray-400 uppercase font-bold mt-0.5">Administrador</p>
               </div>
             </div>
           </header>
-          <div className="p-8 max-w-[1920px] mx-auto">
-            {children}
+
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto p-6 md:p-8">
+            <div className="max-w-[1600px] mx-auto">
+              {children}
+            </div>
           </div>
         </main>
         <Toaster position="top-right" richColors />
@@ -40,3 +48,4 @@ export default function RootLayout({
     </html>
   );
 }
+```

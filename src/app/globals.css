@@ -9,7 +9,8 @@
   }
 
   body {
-    @apply min-h-screen antialiased;
+    @apply min-h-screen antialiased text-sm;
+    /* Default text size constrained */
     color: #000000;
     /* theme-black */
     background-color: #F5F5F5;
