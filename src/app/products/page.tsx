@@ -37,48 +37,50 @@ export default async function ProductsPage({
 
     return (
         <div className="space-y-6">
-            {/* Page Header */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-sm shadow-sm border border-gray-100">
-                <div>
-                    <h1 className="text-2xl font-black text-gray-800 uppercase tracking-tight flex items-center gap-2">
-                        <span className="w-2 h-8 bg-[#FF0000] inline-block rounded-sm"></span>
-                        LISTADO DE PRODUCTOS
-                    </h1>
-                    <p className="text-sm text-gray-500 mt-1 pl-4">Gestión de inventario y stock.</p>
-                </div>
+            <div className="flex flex-col gap-6">
+                {/* Header & Actions Toolbar */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Inventario</h1>
+                        <p className="text-sm text-gray-500">Gestión de productos y control de stock.</p>
+                    </div>
 
-                <div className="flex gap-2">
-                    <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-xs font-bold uppercase transition-colors">
-                        <Printer className="w-4 h-4" />
-                        Imprimir
-                    </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-xs font-bold uppercase transition-colors">
-                        <Download className="w-4 h-4" />
-                        Exportar
-                    </button>
-                    <ProductForm providers={providers}>
-                        <button className="flex items-center gap-2 px-6 py-2 bg-[#FF0000] hover:bg-red-700 text-white rounded text-xs font-bold uppercase shadow-md shadow-red-500/20 transition-all active:scale-95">
-                            <Plus className="w-4 h-4" />
-                            NUEVO PRODUCTO
+                    <div className="flex items-center gap-3">
+                        <ProductForm providers={providers}>
+                            <button className="flex items-center gap-2 px-5 py-2.5 bg-saas-red hover:bg-saas-red-hover text-white rounded-lg text-sm font-semibold shadow-md shadow-red-500/20 transition-all hover:-translate-y-0.5 active:translate-y-0">
+                                <Plus className="w-4 h-4" />
+                                Nuevo Producto
+                            </button>
+                        </ProductForm>
+
+                        <div className="h-8 w-px bg-gray-200 mx-2"></div>
+
+                        <button className="p-2.5 bg-white border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-900 rounded-lg transition-colors shadow-sm" title="Imprimir">
+                            <Printer className="w-4 h-4" />
                         </button>
-                    </ProductForm>
+                        <button className="p-2.5 bg-white border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-900 rounded-lg transition-colors shadow-sm" title="Exportar">
+                            <Download className="w-4 h-4" />
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            {/* Filters & Search */}
-            <div className="bg-white p-4 rounded-sm border border-gray-200 flexGap-4 items-center">
-                <div className="relative flex-1 max-w-md">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <input
-                        type="text"
-                        placeholder="Buscar por nombre, código o medida..."
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-[#FF0000] transition-colors uppercase placeholder:normal-case"
-                        defaultValue={query}
-                    />
+                {/* Search Bar & Filters */}
+                <div className="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center max-w-2xl">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                            type="text"
+                            placeholder="Buscar producto, marca, código..."
+                            className="w-full pl-11 pr-4 py-3 border-none bg-transparent rounded-lg text-sm focus:ring-0 placeholder:text-gray-400 font-medium text-gray-700"
+                            defaultValue={query}
+                        />
+                    </div>
+                    <div className="h-6 w-px bg-gray-100 mx-2"></div>
+                    <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 flex items-center gap-2 hover:bg-gray-50 rounded-lg mr-1 transition-colors">
+                        <Filter className="w-4 h-4" />
+                        Filtros
+                    </button>
                 </div>
-                <button className="p-2 border border-gray-300 rounded hover:bg-gray-50 text-gray-600">
-                    <Filter className="w-4 h-4" />
-                </button>
             </div>
 
             {/* Red Header Table - Matching Reference Image */}
