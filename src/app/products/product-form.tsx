@@ -24,7 +24,7 @@ function SubmitButton() {
     )
 }
 
-export function ProductForm({ providers }: { providers: Provider[] }) {
+export function ProductForm({ providers, children }: { providers: Provider[], children?: React.ReactNode }) {
     const [open, setOpen] = useState(false)
     const [error, setError] = useState("")
 
@@ -41,10 +41,12 @@ export function ProductForm({ providers }: { providers: Provider[] }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button size="sm">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Nuevo Producto
-                </Button>
+                {children || (
+                    <Button size="sm">
+                        <Plus className="mr-2 h-4 w-4" />
+                        Nuevo Producto
+                    </Button>
+                )}
             </DialogTrigger>
             <DialogContent className="sm:max-w-[600px] overflow-y-auto max-h-[90vh]">
                 <DialogHeader>
