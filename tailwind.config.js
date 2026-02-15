@@ -10,24 +10,13 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                "primary": "#137fec",
-                "primary-dark": "#0e64bd",
-                "primary-content": "#ffffff",
-                "background-light": "#f6f7f8",
-                "background-dark": "#101922",
+                "primary": "#FF0000", // Power-Taller Red
+                "primary-dark": "#CC0000",
+                "sidebar": "#FF0000",
+                "top-bar": "#000000", // Top left logo area
+                "background-light": "#F3F4F6", // Light gray background
+                "background-dark": "#1f2937",
                 "surface-light": "#ffffff",
-                "surface-dark": "#182430",
-                "surface-dark-lighter": "#202e3b",
-                "neutral-50": "#f0f7ff",
-                "neutral-100": "#e0effe",
-                "neutral-200": "#bae0fd",
-                "neutral-300": "#7cc5fb",
-                "neutral-400": "#36a9f8",
-                "neutral-500": "#137fec",
-                "neutral-600": "#0b62c0",
-                "neutral-700": "#094e9b",
-                "neutral-800": "#0b4281",
-                "neutral-900": "#0e386c",
             },
             fontFamily: {
                 "display": ["Inter", "sans-serif"]
