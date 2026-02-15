@@ -8,16 +8,6 @@
     font-family: 'Inter', sans-serif;
   }
 
-  body {
-    @apply min-h-screen antialiased bg-saas-bg;
-    color: #1f2937;
-    font-size: 0.875rem;
-    min-width: 1280px;
-    /* Force desktop width */
-    overflow-x: hidden;
-    /* Prevent horizontal scroll */
-  }
-
   /* Mobile Blocker - Only visible on screens < 1024px */
   @media (max-width: 1024px) {
     body::after {
@@ -48,23 +38,32 @@
     }
   }
 
-  /* Hide scrollbar for chrome/safari/opera */
-  &::-webkit-scrollbar {
-    display: none;
+  body {
+    @apply min-h-screen antialiased bg-saas-bg;
+    color: #1f2937;
+    font-size: 0.875rem;
+    min-width: 1280px;
+    /* Force desktop width */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+
+    /* Hide scrollbar for chrome/safari/opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 
-  /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
-a {
-  @apply hover:opacity-80 transition-opacity;
-  text-decoration: none;
-  color: inherit;
-}
+  a {
+    @apply hover:opacity-80 transition-opacity;
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 @layer utilities {

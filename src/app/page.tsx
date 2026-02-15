@@ -43,7 +43,6 @@ export default async function Dashboard() {
   ]
 
   return (
-  return (
     <div className="space-y-10">
       {/* Top Section: Welcome and KPIs in ONE single row of 4 columns */}
       <div className="grid grid-cols-4 gap-6">
