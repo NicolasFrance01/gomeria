@@ -9,25 +9,30 @@
   }
 
   body {
-    @apply min-h-screen antialiased;
+    @apply min-h-screen antialiased bg-saas-bg;
+    color: #1f2937;
+    /* Gray-800 for softer text than pure black */
     font-size: 0.875rem;
-    /* text-sm */
-    color: #000000;
-    /* theme-black */
-    background-color: #F5F5F5;
-    /* theme-gray */
-
-    /* Hide scrollbar for chrome/safari/opera */
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* Hide scrollbar for IE, Edge and Firefox */
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
   }
+
+  a {
+    @apply hover:opacity-80 transition-opacity;
+    text-decoration: none;
+    /* Explicitly remove underlines */
+    color: inherit;
+  }
+
+  /* Hide scrollbar for chrome/safari/opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
 }
 
 @layer utilities {

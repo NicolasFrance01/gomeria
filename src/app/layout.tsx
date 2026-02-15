@@ -18,32 +18,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.className} bg-[#F0F2F5] h-screen overflow-hidden flex antialiased`}>
+      <body className={`${inter.className} bg-saas-bg h-screen overflow-hidden flex antialiased`}>
         <DesktopSidebar />
-        <main className="flex-1 flex flex-col h-screen overflow-hidden bg-[#F5F5F5] relative z-0">
-          {/* Header Bar */}
-          <header className="h-14 flex-shrink-0 bg-white border-b border-gray-200 flex justify-between items-center px-6 shadow-sm z-10">
+        <main className="flex-1 flex flex-col h-screen overflow-hidden relative z-0">
+          {/* White SaaS Topbar */}
+          <header className="h-16 flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-gray-200/60 flex justify-between items-center px-8 shadow-sm z-10">
             <div className="flex items-center gap-2">
-              <span className="text-gray-400 font-bold uppercase text-xs tracking-wider">Sistema de Gestión</span>
-              <span className="text-gray-300">/</span>
-              <span className="text-gray-700 font-bold uppercase text-xs tracking-wider">Panel Principal</span>
+              <h2 className="text-gray-800 font-semibold text-lg tracking-tight">Panel de Control</h2>
             </div>
             <div className="flex items-center gap-4">
-              <div className="text-right">
-                <p className="text-sm font-bold text-gray-900 leading-none">Admin</p>
-                <p className="text-[10px] text-gray-400 uppercase font-bold mt-0.5">Administrador</p>
+              <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
+                <div className="text-right">
+                  <p className="text-sm font-bold text-gray-900 leading-none">Administrador</p>
+                  <p className="text-[11px] text-gray-500 mt-1">Nicolas France</p>
+                </div>
+                <div className="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 font-bold border border-gray-200">
+                  NF
+                </div>
               </div>
             </div>
           </header>
 
-          {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto p-6 md:p-8">
-            <div className="max-w-[1600px] mx-auto">
+          {/* Scrollable Content Area */}
+          <div className="flex-1 overflow-y-auto p-8">
+            <div className="max-w-7xl mx-auto space-y-8">
               {children}
             </div>
           </div>
         </main>
-        <Toaster position="top-right" richColors />
+        <Toaster position="top-right" richColors toastOptions={{ style: { borderRadius: '0.75rem' } }} />
       </body>
     </html>
   );
