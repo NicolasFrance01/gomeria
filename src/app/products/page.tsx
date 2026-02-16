@@ -7,7 +7,9 @@ import {
     Plus,
     Filter,
     Download,
-    Printer
+    Printer,
+    Package,
+    ArrowUpDown
 } from "lucide-react"
 
 export const dynamic = 'force-dynamic'
@@ -36,120 +38,154 @@ export default async function ProductsPage({
     const products = await getProducts(query)
 
     return (
-        <div className="space-y-6">
-            <div className="flex flex-col gap-6">
-                {/* Header & Actions Toolbar */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <h1 className="text-2xl font-bold text-gray-900 tracking-tight">INVENTARIO (ACTUALIZADO)</h1>
-                        <p className="text-sm text-gray-500">Gestión de productos y control de stock.</p>
+        <div className="h-full flex flex-col gap-6">
+            {/* Desktop Header Toolbar */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex items-center justify-between shrink-0">
+                <div className="flex items-center gap-4">
+                    <div className="bg-red-50 p-2.5 rounded-xl">
+                        <Package className="w-6 h-6 text-saas-red" />
                     </div>
-
-                    <div className="flex items-center gap-3">
-                        <ProductForm providers={providers}>
-                            <button className="flex items-center gap-2 px-5 py-2.5 bg-saas-red hover:bg-saas-red-hover text-white rounded-lg text-sm font-semibold shadow-md shadow-red-500/20 transition-all hover:-translate-y-0.5 active:translate-y-0">
-                                <Plus className="w-4 h-4" />
-                                Nuevo Producto
-                            </button>
-                        </ProductForm>
-
-                        <div className="h-8 w-px bg-gray-200 mx-2"></div>
-
-                        <button className="p-2.5 bg-white border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-900 rounded-lg transition-colors shadow-sm" title="Imprimir">
-                            <Printer className="w-4 h-4" />
-                        </button>
-                        <button className="p-2.5 bg-white border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-900 rounded-lg transition-colors shadow-sm" title="Exportar">
-                            <Download className="w-4 h-4" />
-                        </button>
+                    <div>
+                        <h1 className="text-xl font-bold text-gray-900 leading-tight tracking-tight">INVENTARIO</h1>
+                        <div className="flex items-center gap-2 mt-1">
+                            <span className="text-xs font-medium text-gray-500 bg-gray-50 px-2 py-0.5 rounded-full border border-gray-100">
+                                {products.length} productos
+                            </span>
+                            <span className="text-xs text-gray-400">|</span>
+                            <span className="text-xs text-gray-400">Vista de Escritorio</span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Search Bar & Filters */}
-                <div className="bg-white p-1 rounded-xl shadow-sm border border-gray-200 flex items-center max-w-2xl">
-                    <div className="relative flex-1">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <div className="flex items-center gap-4">
+                    {/* Search Bar */}
+                    <div className="relative w-96 group">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Search className="h-4 w-4 text-gray-400 group-hover:text-saas-red transition-colors" />
+                        </div>
                         <input
                             type="text"
-                            placeholder="Buscar producto, marca, código..."
-                            className="w-full pl-11 pr-4 py-3 border-none bg-transparent rounded-lg text-sm focus:ring-0 placeholder:text-gray-400 font-medium text-gray-700"
                             defaultValue={query}
+                            placeholder="Buscar por nombre, código, marca..."
+                            className="block w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-saas-red/20 focus:border-saas-red transition-all bg-gray-50/50 focus:bg-white"
                         />
                     </div>
-                    <div className="h-6 w-px bg-gray-100 mx-2"></div>
-                    <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 flex items-center gap-2 hover:bg-gray-50 rounded-lg mr-1 transition-colors">
-                        <Filter className="w-4 h-4" />
-                        Filtros
-                    </button>
+
+                    <div className="h-8 w-px bg-gray-200"></div>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-2">
+                        <button className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:text-gray-900 transition-all shadow-sm">
+                            <Filter className="w-4 h-4" />
+                            <span className="hidden xl:inline">Filtros</span>
+                        </button>
+                        <button className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:text-gray-900 transition-all shadow-sm">
+                            <Download className="w-4 h-4" />
+                            <span className="hidden xl:inline">Exportar</span>
+                        </button>
+                    </div>
+
+                    <ProductForm providers={providers}>
+                        <button className="flex items-center gap-2 px-6 py-2.5 bg-saas-red text-white text-sm font-bold rounded-xl shadow-lg shadow-red-500/30 hover:bg-saas-red-hover hover:shadow-red-500/40 hover:-translate-y-0.5 transition-all active:translate-y-0 active:shadow-sm">
+                            <Plus className="w-4 h-4 text-white" />
+                            NUEVO PRODUCTO
+                        </button>
+                    </ProductForm>
                 </div>
             </div>
 
-            {/* Red Header Table - Matching Reference Image */}
-            <div className="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-sm">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left">
-                        <thead className="bg-[#FF0000] text-white uppercase text-xs font-bold tracking-wider">
+            {/* Desktop Table Container */}
+            <div className="bg-white border border-gray-200 rounded-2xl shadow-card flex-1 overflow-hidden flex flex-col">
+                <div className="overflow-auto flex-1">
+                    <table className="w-full text-left border-collapse">
+                        <thead className="bg-gray-50/80 sticky top-0 z-10 backdrop-blur-sm border-b border-gray-200">
                             <tr>
-                                <th className="px-4 py-3 w-[100px] text-center">ACCIONES</th>
-                                <th className="px-6 py-3">PRODUCTO</th>
-                                <th className="px-6 py-3">MARCA</th>
-                                <th className="px-6 py-3">MEDIDA</th>
-                                <th className="px-6 py-3 text-center">CATEGORÍA</th>
-                                <th className="px-6 py-3 text-center">STOCK</th>
-                                <th className="px-6 py-3 text-right">PRECIO VENTA</th>
+                                <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[120px] text-center">Acciones</th>
+                                <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-saas-red group transition-colors">
+                                    <div className="flex items-center gap-1">Producto <ArrowUpDown className="w-3 h-3 opacity-0 group-hover:opacity-100" /></div>
+                                </th>
+                                <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[150px]">Marca</th>
+                                <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[150px]">Medida</th>
+                                <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-center w-[120px]">Categoría</th>
+                                <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-center w-[100px]">Stock</th>
+                                <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right w-[150px]">Precio Venta</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                             {products.length === 0 ? (
                                 <tr>
-                                    <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
-                                        No se encontraron productos coincidentes.
+                                    <td colSpan={7} className="px-6 py-24 text-center">
+                                        <div className="flex flex-col items-center justify-center text-gray-400">
+                                            <div className="bg-gray-50 p-4 rounded-full mb-3">
+                                                <Package className="w-8 h-8 opacity-50" />
+                                            </div>
+                                            <p className="text-lg font-medium text-gray-900">No hay productos</p>
+                                            <p className="text-sm">Intenta ajustar los filtros o agrega uno nuevo.</p>
+                                        </div>
                                     </td>
                                 </tr>
                             ) : (
                                 products.map((product) => (
-                                    <tr key={product.id} className="hover:bg-red-50/30 transition-colors group">
-                                        <td className="px-4 py-3 text-center">
-                                            <div className="flex justify-center gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                                                <button className="p-1.5 text-blue-600 hover:bg-blue-50 rounded">
+                                    <tr key={product.id} className="group hover:bg-red-50/10 transition-colors">
+                                        <td className="px-6 py-3">
+                                            <div className="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Editar">
                                                     <Edit className="w-4 h-4" />
                                                 </button>
-                                                <button className="p-1.5 text-red-600 hover:bg-red-50 rounded">
+                                                <button className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Eliminar">
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-3 font-bold text-gray-900 uppercase">
-                                            {product.name}
+                                        <td className="px-6 py-3">
+                                            <div className="flex flex-col">
+                                                <span className="font-bold text-gray-900 text-sm">{product.name}</span>
+                                                {product.provider && (
+                                                    <span className="text-[10px] text-gray-400 mt-0.5">{product.provider.name}</span>
+                                                )}
+                                            </div>
                                         </td>
-                                        <td className="px-6 py-3 text-gray-600 uppercase">
-                                            {product.brand}
-                                        </td>
-                                        <td className="px-6 py-3 text-gray-600 font-mono text-xs">
-                                            {product.size}
-                                        </td>
+                                        <td className="px-6 py-3 text-sm text-gray-600 font-medium">{product.brand}</td>
+                                        <td className="px-6 py-3 text-sm text-gray-600 font-mono bg-gray-50/50 px-2 rounded w-fit">{product.size}</td>
                                         <td className="px-6 py-3 text-center">
                                             <span className={`
-                                                px-2 py-0.5 rounded text-[10px] font-bold uppercase border
-                                                ${product.category === 'NUEVO' ? 'bg-green-50 text-green-700 border-green-200' : ''}
-                                                ${product.category === 'USADO' ? 'bg-orange-50 text-orange-700 border-orange-200' : ''}
-                                                ${product.category === 'INSUMO' ? 'bg-gray-50 text-gray-700 border-gray-200' : ''}
-                                             `}>
+                                                inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border
+                                                ${product.category === 'NUEVO' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : ''}
+                                                ${product.category === 'USADO' ? 'bg-amber-50 text-amber-700 border-amber-100' : ''}
+                                                ${product.category === 'INSUMO' ? 'bg-slate-50 text-slate-700 border-slate-200' : ''}
+                                            `}>
                                                 {product.category}
                                             </span>
                                         </td>
                                         <td className="px-6 py-3 text-center">
-                                            <span className={`font-bold ${product.stock <= 5 ? 'text-red-600' : 'text-gray-900'}`}>
-                                                {product.stock}
-                                            </span>
+                                            <div className="flex flex-col items-center">
+                                                <span className={`font-bold text-sm ${product.stock <= 5 ? 'text-red-600' : 'text-gray-900'}`}>
+                                                    {product.stock}
+                                                </span>
+                                                {product.stock <= 5 && (
+                                                    <span className="text-[9px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded mt-0.5">BAJO</span>
+                                                )}
+                                            </div>
                                         </td>
-                                        <td className="px-6 py-3 text-right font-bold text-gray-900">
-                                            ${product.sellPrice}
+                                        <td className="px-6 py-3 text-right">
+                                            <span className="font-bold text-gray-900 text-sm font-mono tracking-tight">
+                                                ${product.sellPrice.toLocaleString('es-AR')}
+                                            </span>
                                         </td>
                                     </tr>
                                 ))
                             )}
                         </tbody>
                     </table>
+                </div>
+                {/* Footer del listado */}
+                <div className="bg-gray-50 border-t border-gray-100 p-3 flex justify-between items-center text-xs text-gray-500">
+                    <p>Mostrando {products.length} registros</p>
+                    <div className="flex gap-2">
+                        {/* Placeholder for pagination */}
+                        <span className="px-2 py-1 bg-white border border-gray-200 rounded text-gray-300 cursor-not-allowed">Anterior</span>
+                        <span className="px-2 py-1 bg-white border border-gray-200 rounded text-gray-300 cursor-not-allowed">Siguiente</span>
+                    </div>
                 </div>
             </div>
         </div>
