@@ -3,13 +3,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Phone, Mail, MapPin, Plus, Truck } from "lucide-react";
+import { Search, Phone, Mail, MapPin, Plus, Truck, User as UserIconLucide } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 // Mock Data
-const suppliers = [
+const initialSuppliers = [
     { id: 1, name: "Distribuidora Michelin", contact: "Carlos Ruiz", phone: "11-4567-8901", email: "ventas@michelin-dist.com.ar", address: "Av. Libertador 1234, CABA", lastOrder: "2023-10-15", status: "active" },
     { id: 2, name: "Lubricantes Shell Oficial", contact: "Ana Gomez", phone: "11-5555-4321", email: "pedidos@geo-lub.com", address: "Ruta 8 Km 20, San Martin", lastOrder: "2023-10-20", status: "active" },
     { id: 3, name: "Repuestos Ford Zona Norte", contact: "Roberto P.", phone: "11-9876-5432", email: "roberto@fordzn.com", address: "Panamericana 123, Tigre", lastOrder: "2023-09-05", status: "inactive" },
@@ -17,7 +20,37 @@ const suppliers = [
 ];
 
 export default function SuppliersPage() {
-    const [selectedSupplier, setSelectedSupplier] = useState<typeof suppliers[0] | null>(suppliers[0]);
+    const [suppliers, setSuppliers] = useState(initialSuppliers);
+    const [selectedSupplier, setSelectedSupplier] = useState<typeof initialSuppliers[0] | null>(initialSuppliers[0]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+    const filteredSuppliers = suppliers.filter(s =>
+        s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        s.contact.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const handleAddSupplier = (e: React.FormEvent) => {
+        e.preventDefault();
+        const form = e.target as HTMLFormElement;
+        const formData = new FormData(form);
+
+        const newSupplier = {
+            id: suppliers.length + 1,
+            name: formData.get("name") as string,
+            contact: formData.get("contact") as string,
+            phone: formData.get("phone") as string,
+            email: formData.get("email") as string,
+            address: formData.get("address") as string,
+            lastOrder: "-",
+            status: "active"
+        };
+
+        setSuppliers([...suppliers, newSupplier]);
+        setIsAddModalOpen(false);
+        toast.success("Proveedor agregado correctamente");
+        setSelectedSupplier(newSupplier);
+    };
 
     return (
         <div className="h-[calc(100vh-8rem)] flex gap-6">
@@ -26,15 +59,57 @@ export default function SuppliersPage() {
                 <div className="flex gap-2">
                     <div className="relative flex-1">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                        <Input placeholder="Buscar proveedor..." className="pl-9 bg-white" />
+                        <Input
+                            placeholder="Buscar proveedor..."
+                            className="pl-9 bg-white"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
                     </div>
-                    <Button size="icon" className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90">
-                        <Plus className="h-4 w-4" />
-                    </Button>
+
+                    <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
+                        <DialogTrigger asChild>
+                            <Button size="icon" className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90">
+                                <Plus className="h-4 w-4" />
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Agregar Nuevo Proveedor</DialogTitle>
+                            </DialogHeader>
+                            <form onSubmit={handleAddSupplier} className="space-y-4 py-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="name">Nombre Comercial / Razón Social</Label>
+                                    <Input id="name" name="name" required placeholder="Ej: Distribuidora Oeste" />
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="contact">Contacto Principal</Label>
+                                        <Input id="contact" name="contact" required placeholder="Ej: Juan Perez" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="phone">Teléfono</Label>
+                                        <Input id="phone" name="phone" required placeholder="Ej: 11-1234-5678" />
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="email">Email</Label>
+                                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.com" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="address">Dirección</Label>
+                                    <Input id="address" name="address" placeholder="Av. Principal 123" />
+                                </div>
+                                <DialogFooter>
+                                    <Button type="submit">Guardar Proveedor</Button>
+                                </DialogFooter>
+                            </form>
+                        </DialogContent>
+                    </Dialog>
                 </div>
 
                 <div className="flex-1 overflow-y-auto space-y-2 pr-2 no-scrollbar">
-                    {suppliers.map((supplier) => (
+                    {filteredSuppliers.map((supplier) => (
                         <Card
                             key={supplier.id}
                             className={`cursor-pointer transition-all hover:bg-slate-50 ${selectedSupplier?.id === supplier.id ? 'border-primary ring-1 ring-primary' : 'bg-white'}`}
@@ -78,7 +153,7 @@ export default function SuppliersPage() {
                                             </div>
                                         </div>
                                     </div>
-                                    <Button>Editar Proveedor</Button>
+                                    <Button variant="outline" onClick={() => toast.info("Edición próximamente")}>Editar Proveedor</Button>
                                 </div>
                             </div>
 
@@ -91,7 +166,7 @@ export default function SuppliersPage() {
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3">
                                             <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">
-                                                <UserIcon />
+                                                <UserIconLucide className="h-4 w-4" />
                                             </div>
                                             <div>
                                                 <p className="text-xs text-muted-foreground">Contacto Principal</p>

@@ -1,11 +1,22 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Store, User, CreditCard, Bell } from "lucide-react";
+import { toast } from "sonner";
 
 export default function SettingsPage() {
+    const handleSave = () => {
+        toast.success("Configuración guardada correctamente");
+    };
+
+    const handleCancel = () => {
+        toast.info("Cambios descartados");
+    };
+
     return (
         <div className="space-y-6">
             <div>
@@ -91,8 +102,8 @@ export default function SettingsPage() {
                     </Card>
 
                     <div className="flex justify-end gap-2">
-                        <Button variant="outline">Cancelar</Button>
-                        <Button>Guardar Cambios</Button>
+                        <Button variant="outline" onClick={handleCancel}>Cancelar</Button>
+                        <Button onClick={handleSave}>Guardar Cambios</Button>
                     </div>
                 </div>
             </div>

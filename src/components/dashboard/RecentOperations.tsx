@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Table,
     TableBody,
@@ -9,8 +11,11 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AlertCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function RecentOperations() {
+    const router = useRouter();
+
     return (
         <div className="grid grid-cols-3 gap-6">
             {/* Recent Transactions Table */}
@@ -117,7 +122,10 @@ export function RecentOperations() {
                             </div>
                         </div>
 
-                        <button className="w-full mt-4 text-xs font-medium text-primary hover:underline">
+                        <button
+                            onClick={() => router.push('/inventory')}
+                            className="w-full mt-4 text-xs font-medium text-primary hover:underline"
+                        >
                             Ver todo el inventario →
                         </button>
                     </div>

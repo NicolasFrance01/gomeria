@@ -15,7 +15,7 @@ import { Edit2, Trash2, Search, Filter, MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 
 // Mock Data
-const products = [
+const initialProducts = [
     { id: 1, name: "Michelin Primacy 4", brand: "Michelin", size: "205/55 R16", stock: 12, price: 145000, status: "active" },
     { id: 2, name: "Pirelli Cinturato P7", brand: "Pirelli", size: "225/45 R17", stock: 8, price: 168000, status: "active" },
     { id: 3, name: "Bridgestone Turanza", brand: "Bridgestone", size: "195/65 R15", stock: 4, price: 125000, status: "low_stock" },
@@ -26,8 +26,24 @@ const products = [
     { id: 8, name: "Fate Eximia Pininfarina", brand: "Fate", size: "185/60 R15", stock: 20, price: 95000, status: "active" },
 ];
 
+import { toast } from "sonner";
+
 export function ProductTable() {
+    const [products, setProducts] = useState(initialProducts);
     const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.size.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const handleDelete = (id: number) => {
+        // In a real app, this would be an API call
+        // For now, optimistic update
+        setProducts(products.filter(p => p.id !== id));
+        toast.success("Producto eliminado correctamente");
+    };
 
     return (
         <div className="space-y-4">
@@ -49,7 +65,7 @@ export function ProductTable() {
                 </div>
                 <div className="flex items-center gap-2">
                     <span className="text-sm text-muted-foreground">
-                        Mostrando {products.length} productos
+                        Mostrando {filteredProducts.length} productos
                     </span>
                 </div>
             </div>
@@ -69,48 +85,66 @@ export function ProductTable() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {products.map((product) => (
-                            <TableRow key={product.id}>
-                                <TableCell className="font-medium text-primary">
-                                    {product.name}
-                                </TableCell>
-                                <TableCell>{product.brand}</TableCell>
-                                <TableCell>{product.size}</TableCell>
-                                <TableCell className="text-right font-medium">
-                                    {product.stock} un.
-                                </TableCell>
-                                <TableCell className="text-right font-medium text-slate-700">
-                                    ${product.price.toLocaleString()}
-                                </TableCell>
-                                <TableCell className="text-center">
-                                    {product.status === "active" && (
-                                        <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
-                                            Normal
-                                        </Badge>
-                                    )}
-                                    {product.status === "low_stock" && (
-                                        <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">
-                                            Bajo Stock
-                                        </Badge>
-                                    )}
-                                    {product.status === "out_of_stock" && (
-                                        <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
-                                            Sin Stock
-                                        </Badge>
-                                    )}
-                                </TableCell>
-                                <TableCell className="text-right">
-                                    <div className="flex items-center justify-end gap-2">
-                                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-slate-100">
-                                            <Edit2 className="h-4 w-4 text-slate-500" />
-                                        </Button>
-                                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-slate-100">
-                                            <Trash2 className="h-4 w-4 text-slate-500" />
-                                        </Button>
-                                    </div>
+                        {filteredProducts.length > 0 ? (
+                            filteredProducts.map((product) => (
+                                <TableRow key={product.id}>
+                                    <TableCell className="font-medium text-primary">
+                                        {product.name}
+                                    </TableCell>
+                                    <TableCell>{product.brand}</TableCell>
+                                    <TableCell>{product.size}</TableCell>
+                                    <TableCell className="text-right font-medium">
+                                        {product.stock} un.
+                                    </TableCell>
+                                    <TableCell className="text-right font-medium text-slate-700">
+                                        ${product.price.toLocaleString()}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                        {product.status === "active" && (
+                                            <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
+                                                Normal
+                                            </Badge>
+                                        )}
+                                        {product.status === "low_stock" && (
+                                            <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">
+                                                Bajo Stock
+                                            </Badge>
+                                        )}
+                                        {product.status === "out_of_stock" && (
+                                            <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
+                                                Sin Stock
+                                            </Badge>
+                                        )}
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <div className="flex items-center justify-end gap-2">
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 hover:bg-slate-100"
+                                                onClick={() => toast.info("Función de editar próximamente")}
+                                            >
+                                                <Edit2 className="h-4 w-4 text-slate-500" />
+                                            </Button>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 hover:bg-red-50"
+                                                onClick={() => handleDelete(product.id)}
+                                            >
+                                                <Trash2 className="h-4 w-4 text-red-500" />
+                                            </Button>
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={7} className="h-24 text-center">
+                                    No se encontraron resultados.
                                 </TableCell>
                             </TableRow>
-                        ))}
+                        )}
                     </TableBody>
                 </Table>
             </div>

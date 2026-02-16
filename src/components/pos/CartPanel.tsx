@@ -2,15 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Trash2, Plus, Minus, CreditCard, Banknote } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Trash2, Plus, Minus } from "lucide-react";
 
 interface CartPanelProps {
     items: any[];
     onRemoveItem: (id: number) => void;
+    onUpdateQuantity: (id: number, delta: number) => void;
+    onCheckout: () => void;
+    onCancel: () => void;
 }
 
-export function CartPanel({ items, onRemoveItem }: CartPanelProps) {
+export function CartPanel({ items, onRemoveItem, onUpdateQuantity, onCheckout, onCancel }: CartPanelProps) {
     const subtotal = items.reduce((acc, item) => acc + item.price * item.qty, 0);
     const total = subtotal; // Pending discount logic
 
@@ -48,11 +50,22 @@ export function CartPanel({ items, onRemoveItem }: CartPanelProps) {
                                 </TableCell>
                                 <TableCell>
                                     <div className="flex items-center justify-center gap-1">
-                                        <Button variant="outline" size="icon" className="h-6 w-6 rounded-full">
+                                        <Button
+                                            variant="outline"
+                                            size="icon"
+                                            className="h-6 w-6 rounded-full"
+                                            onClick={() => onUpdateQuantity(item.id, -1)}
+                                            disabled={item.qty <= 1}
+                                        >
                                             <Minus className="h-3 w-3" />
                                         </Button>
                                         <span className="w-6 text-center text-sm font-medium">{item.qty}</span>
-                                        <Button variant="outline" size="icon" className="h-6 w-6 rounded-full">
+                                        <Button
+                                            variant="outline"
+                                            size="icon"
+                                            className="h-6 w-6 rounded-full"
+                                            onClick={() => onUpdateQuantity(item.id, 1)}
+                                        >
                                             <Plus className="h-3 w-3" />
                                         </Button>
                                     </div>
@@ -97,10 +110,19 @@ export function CartPanel({ items, onRemoveItem }: CartPanelProps) {
 
                 {/* Action Buttons */}
                 <div className="grid grid-cols-2 gap-3">
-                    <Button variant="outline" className="h-12 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700">
+                    <Button
+                        variant="outline"
+                        className="h-12 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                        onClick={onCancel}
+                        disabled={items.length === 0}
+                    >
                         Cancelar
                     </Button>
-                    <Button className="h-12 text-lg font-semibold bg-primary hover:bg-primary/90">
+                    <Button
+                        className="h-12 text-lg font-semibold bg-primary hover:bg-primary/90"
+                        onClick={onCheckout}
+                        disabled={items.length === 0}
+                    >
                         Cobrar
                     </Button>
                 </div>

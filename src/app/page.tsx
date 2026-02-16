@@ -1,8 +1,13 @@
+"use client";
+
 import { MetricsCards } from "@/components/dashboard/MetricsCards";
 import { SalesChart } from "@/components/dashboard/SalesChart";
 import { RecentOperations } from "@/components/dashboard/RecentOperations";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
+  const router = useRouter();
+
   return (
     <div className="space-y-6">
       <MetricsCards />
@@ -18,10 +23,16 @@ export default function Dashboard() {
               <p className="text-slate-300 text-sm mt-1">Gestión inmediata</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <button className="bg-white/10 hover:bg-white/20 transition-colors p-2 rounded text-xs font-medium text-center">
+              <button
+                onClick={() => router.push('/pos')}
+                className="bg-white/10 hover:bg-white/20 transition-colors p-2 rounded text-xs font-medium text-center"
+              >
                 Nueva Venta
               </button>
-              <button className="bg-white/10 hover:bg-white/20 transition-colors p-2 rounded text-xs font-medium text-center">
+              <button
+                onClick={() => router.push('/workshop')}
+                className="bg-white/10 hover:bg-white/20 transition-colors p-2 rounded text-xs font-medium text-center"
+              >
                 Nuevo Turno
               </button>
             </div>

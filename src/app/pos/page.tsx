@@ -3,12 +3,10 @@
 import { ProductSelector } from "@/components/pos/ProductSelector";
 import { CartPanel } from "@/components/pos/CartPanel";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function POSPage() {
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: "Michelin Primacy 4", price: 145000, qty: 2 },
-        { id: 6, name: "Balanceo x Rueda", price: 8500, qty: 2 },
-    ]);
+    const [cartItems, setCartItems] = useState<any[]>([]);
 
     const handleAddProduct = (product: any) => {
         // Check if exists
@@ -26,6 +24,28 @@ export default function POSPage() {
         setCartItems(cartItems.filter(item => item.id !== id));
     };
 
+    const handleUpdateQuantity = (id: number, delta: number) => {
+        setCartItems(cartItems.map(item => {
+            if (item.id === id) {
+                const newQty = Math.max(1, item.qty + delta);
+                return { ...item, qty: newQty };
+            }
+            return item;
+        }));
+    };
+
+    const handleCheckout = () => {
+        toast.success("Venta realizada exitosamente!");
+        setCartItems([]);
+    };
+
+    const handleCancel = () => {
+        if (confirm("¿Estás seguro de cancelar la venta actual?")) {
+            setCartItems([]);
+            toast.info("Venta cancelada");
+        }
+    };
+
     return (
         <div className="h-[calc(100vh-8rem)] grid grid-cols-12 gap-6">
             {/* Left Panel: Catalog */}
@@ -35,7 +55,13 @@ export default function POSPage() {
 
             {/* Right Panel: Cart */}
             <div className="col-span-5 h-full">
-                <CartPanel items={cartItems} onRemoveItem={handleRemoveItem} />
+                <CartPanel
+                    items={cartItems}
+                    onRemoveItem={handleRemoveItem}
+                    onUpdateQuantity={handleUpdateQuantity}
+                    onCheckout={handleCheckout}
+                    onCancel={handleCancel}
+                />
             </div>
         </div>
     );
