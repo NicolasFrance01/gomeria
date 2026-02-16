@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { DesktopSidebar } from "@/components/layout/Nav";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Header } from "@/components/layout/Header";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,35 +19,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.className} bg-saas-bg h-screen overflow-hidden flex antialiased`}>
-        <DesktopSidebar />
-        <main className="flex-1 flex flex-col h-screen overflow-hidden relative z-0">
-          {/* White SaaS Topbar */}
-          <header className="h-16 flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-gray-200/60 flex justify-between items-center px-8 shadow-sm z-10">
-            <div className="flex items-center gap-2">
-              <h2 className="text-gray-800 font-semibold text-lg tracking-tight">Panel de Control</h2>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <div className="flex flex-col items-end">
-                  <span className="text-sm font-bold text-gray-800 leading-none">Nicolas France</span>
-                  <span className="text-[10px] text-gray-500 font-medium uppercase mt-0.5 tracking-wide">Administrador</span>
-                </div>
-                <div className="w-8 h-8 bg-saas-red text-white rounded-lg flex items-center justify-center font-bold text-xs shadow-sm">
-                  NF
-                </div>
-              </div>
-            </div>
-          </header>
+      <body className={`${inter.className} min-h-screen flex antialiased bg-background`}>
+        {/* Fixed Sidebar */}
+        <Sidebar />
 
-          {/* Scrollable Content Area */}
-          <div className="flex-1 overflow-y-auto p-8">
-            <div className="max-w-[1600px] mx-auto space-y-8">
+        {/* Main Content Area */}
+        {/* Margin left matches sidebar width (280px) */}
+        <div className="flex-1 flex flex-col min-h-screen ml-[280px] transition-all duration-300 ease-in-out">
+          {/* Fixed Header */}
+          <Header />
+
+          {/* Scrollable Content */}
+          <main className="flex-1 p-8">
+            <div className="max-w-[1600px] mx-auto w-full">
               {children}
             </div>
-          </div>
-        </main>
-        <Toaster position="top-right" richColors toastOptions={{ style: { borderRadius: '0.75rem' } }} />
+          </main>
+        </div>
+
+        <Toaster position="top-right" richColors toastOptions={{ style: { borderRadius: '0.5rem' } }} />
       </body>
     </html>
   );

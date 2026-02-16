@@ -1,78 +1,110 @@
-@config "../../tailwind.config.js";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #0f172a;
+  /* Slate 900 */
+  --color-primary-foreground: #f8fafc;
+  /* Slate 50 */
+
+  --color-secondary: #ffffff;
+  --color-secondary-foreground: #0f172a;
+
+  --color-accent: #3b82f6;
+  /* Blue 500 */
+  --color-accent-foreground: #ffffff;
+
+  --color-destructive: #ef4444;
+  /* Red 500 */
+  --color-destructive-foreground: #ffffff;
+
+  --color-muted: #f1f5f9;
+  /* Slate 100 */
+  --color-muted-foreground: #64748b;
+  /* Slate 500 */
+
+  --color-background: #f8fafc;
+  /* Slate 50 */
+  --color-foreground: #0f172a;
+  /* Slate 900 */
+
+  --color-surface: #ffffff;
+
+  --color-card: #ffffff;
+  --color-card-foreground: #0f172a;
+
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0f172a;
+
+  --color-border: #e2e8f0;
+  /* Slate 200 */
+  --color-input: #e2e8f0;
+
+  --color-ring: #0f172a;
+  /* Slate 900 */
+
+  --radius-lg: 0.5rem;
+  --radius-md: 0.375rem;
+  --radius-sm: 0.25rem;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
 
 @layer base {
   html {
     font-family: 'Inter', sans-serif;
-  }
-
-  /* Mobile Blocker - Only visible on screens < 1024px */
-  @media (max-width: 1024px) {
-    body::after {
-      content: "Este sistema está optimizado para uso en computadora. Por favor, expande tu ventana o usa un dispositivo de escritorio.";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #1f2937;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      z-index: 9999;
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-
-    /* Hide everything else under the blocker */
-    #root,
-    main,
-    aside,
-    header {
-      display: none !important;
-    }
+    background-color: var(--color-background);
+    color: var(--color-primary);
   }
 
   body {
-    @apply min-h-screen antialiased bg-saas-bg;
-    color: #1f2937;
-    font-size: 0.875rem;
     min-width: 1280px;
     /* Force desktop width */
-    overflow-x: hidden;
-    /* Prevent horizontal scroll */
-
-    /* Hide scrollbar for chrome/safari/opera */
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* Hide scrollbar for IE, Edge and Firefox */
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
+    overflow-x: auto;
+    /* Allow horizontal scroll if window is too small */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  a {
-    @apply hover:opacity-80 transition-opacity;
-    text-decoration: none;
-    color: inherit;
+  /* Hide scrollbar for clean look but allow scrolling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
   }
 }
 
 @layer utilities {
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  .text-balance {
+    text-wrap: balance;
   }
 }
